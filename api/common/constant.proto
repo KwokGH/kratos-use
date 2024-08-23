@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package api.common;
+
+option go_package = "kratos-use/api/common;common";
+

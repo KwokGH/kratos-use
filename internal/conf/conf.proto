@@ -1,0 +1,56 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "admin/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  Log log = 3;
+  App app = 4;
+}
+
+message App {
+  message Auth {
+    string access_secret = 1;
+    int64 access_expire = 2;
+  }
+  message Wechat {
+    string app_id = 1;
+    string secret = 2;
+  }
+  message Coze {
+    string key = 1;
+  }
+  Auth auth = 1;
+  Wechat wechat = 2;
+  Coze coze = 3;
+}
+
+message Log {
+  string out_type = 1;
+  string file_path = 2;
+  int32 max_size = 3;
+  int32 max_age = 4;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    int32 timeout = 3;
+  }
+
+  HTTP http = 1;
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+  }
+
+  Database database = 1;
+}

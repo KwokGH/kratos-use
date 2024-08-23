@@ -1,0 +1,321 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /api/v1/diary:
+        get:
+            tags:
+                - Diary
+            description: 日志列表
+            operationId: Diary_ListDiary
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: keywords
+                  in: query
+                  schema:
+                    type: string
+                - name: startAt
+                  in: query
+                  schema:
+                    type: string
+                - name: endAt
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.diary.v1.ListDiaryResp'
+        post:
+            tags:
+                - Diary
+            description: 日志创建
+            operationId: Diary_CreateDiary
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.mini.diary.v1.CreateDiaryReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.diary.v1.CreateDiaryResp'
+    /api/v1/diary/{id}:
+        get:
+            tags:
+                - Diary
+            description: 日志详情
+            operationId: Diary_GetDiary
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.diary.v1.GetDiaryResp'
+        put:
+            tags:
+                - Diary
+            description: 日志修改
+            operationId: Diary_UpdateDiary
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.mini.diary.v1.UpdateDiaryReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.diary.v1.UpdateDiaryResp'
+        delete:
+            tags:
+                - Diary
+            description: 日志删除
+            operationId: Diary_DeleteDiary
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.diary.v1.DeleteDiaryResp'
+    /api/v1/user/login:
+        post:
+            tags:
+                - User
+            operationId: User_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.mini.user.v1.LoginReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.user.v1.LoginResp'
+    /api/v1/user/register:
+        post:
+            tags:
+                - User
+            operationId: User_Register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.mini.user.v1.RegisterReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.user.v1.RegisterResp'
+    /api/v1/user/{id}:
+        get:
+            tags:
+                - User
+            description: 获取登录的用户信息
+            operationId: User_GetLoginUserInfo
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.mini.user.v1.GetLoginUserInfoResp'
+    /ping:
+        get:
+            tags:
+                - Common
+            operationId: Common_Ping
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.common.PingResp'
+components:
+    schemas:
+        api.common.PingResp:
+            type: object
+            properties:
+                version:
+                    type: string
+                name:
+                    type: string
+                time:
+                    type: string
+        api.mini.diary.v1.CreateDiaryReq:
+            type: object
+            properties:
+                title:
+                    type: string
+                content:
+                    type: string
+                belongAt:
+                    type: string
+                tag:
+                    type: string
+        api.mini.diary.v1.CreateDiaryResp:
+            type: object
+            properties:
+                id:
+                    type: string
+        api.mini.diary.v1.DeleteDiaryResp:
+            type: object
+            properties:
+                id:
+                    type: string
+        api.mini.diary.v1.GetDiaryResp:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                content:
+                    type: string
+                belongAt:
+                    type: string
+                tag:
+                    type: string
+        api.mini.diary.v1.ListDiaryResp:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                list:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/api.mini.diary.v1.ListItemDiaryResp'
+        api.mini.diary.v1.ListItemDiaryResp:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                desc:
+                    type: string
+                belongAt:
+                    type: string
+                tag:
+                    type: string
+        api.mini.diary.v1.UpdateDiaryReq:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                content:
+                    type: string
+                belongAt:
+                    type: string
+                tag:
+                    type: string
+        api.mini.diary.v1.UpdateDiaryResp:
+            type: object
+            properties:
+                id:
+                    type: string
+        api.mini.user.v1.GetLoginUserInfoResp:
+            type: object
+            properties:
+                id:
+                    type: string
+                userName:
+                    type: string
+                mobile:
+                    type: string
+        api.mini.user.v1.LoginReq:
+            type: object
+            properties:
+                account:
+                    type: string
+                password:
+                    type: string
+        api.mini.user.v1.LoginResp:
+            type: object
+            properties:
+                token:
+                    type: string
+        api.mini.user.v1.RegisterReq:
+            type: object
+            properties:
+                account:
+                    type: string
+                password:
+                    type: string
+        api.mini.user.v1.RegisterResp:
+            type: object
+            properties:
+                userId:
+                    type: string
+tags:
+    - name: Common
+    - name: Diary
+    - name: User

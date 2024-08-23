@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package api.mini.diary.v1;
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "common/common.proto";
+
+option go_package = "kratos-use/api/mini/diary/v1;v1";
+
+service Diary {
+	// 日志列表
+	rpc ListDiary (ListDiaryReq) returns (ListDiaryResp) {
+		option (google.api.http) = {
+			get: "/api/v1/diary",
+		};
+	}
+	// 日志详情
+	rpc GetDiary (GetDiaryReq) returns (GetDiaryResp) {
+		option (google.api.http) = {
+			get: "/api/v1/diary/{id}",
+		};
+	}
+	// 日志创建
+	rpc CreateDiary (CreateDiaryReq) returns (CreateDiaryResp) {
+		option (google.api.http) = {
+			post: "/api/v1/diary",
+			body: "*",
+		};
+	}
+	// 日志修改
+	rpc UpdateDiary (UpdateDiaryReq) returns (UpdateDiaryResp) {
+		option (google.api.http) = {
+			put: "/api/v1/diary/{id}",
+			body: "*",
+		};
+	}
+	// 日志删除
+	rpc DeleteDiary (DeleteDiaryReq) returns (DeleteDiaryResp) {
+		option (google.api.http) = {
+			delete: "/api/v1/diary/{id}",
+		};
+	}
+}
+
+message DeleteDiaryReq{
+	string id = 1;
+}
+message DeleteDiaryResp{
+	string id=1;
+}
+
+message UpdateDiaryReq {
+	string id = 1;
+	string title = 2;
+	string content = 3;
+	int64 belongAt = 4;
+	string tag = 5;
+}
+message UpdateDiaryResp {
+	string id = 1;
+}
+
+message CreateDiaryReq {
+	string title = 1;
+	string content = 2;
+	int64 belongAt = 3;
+	string tag = 4;
+}
+message CreateDiaryResp {
+	string id = 1;
+}
+
+message GetDiaryReq {
+	string id = 1;
+}
+message GetDiaryResp {
+	string id = 1;
+	string title = 2;
+	int64 createdAt = 3;
+	int64 updatedAt = 4;
+	string content = 5;
+	int64 belongAt = 6;
+	string tag = 7;
+}
+
+message ListDiaryReq {
+	int32 page = 1;
+	int32 pageSize = 2;
+	string keywords = 3;
+	int64 startAt= 4;
+	int64 endAt = 5;
+}
+message ListDiaryResp {
+	int32 total = 1;
+	repeated ListItemDiaryResp list=2;
+}
+message ListItemDiaryResp {
+	string id = 1;
+	string title = 2;
+	int64 createdAt = 3;
+	int64 updatedAt = 4;
+	string desc = 5;
+	int64 belongAt = 6;
+	string tag = 7;
+}
+

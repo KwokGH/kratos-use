@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package api.common;
+
+import "google/protobuf/any.proto";
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+
+option go_package = "kratos-use/api/common;common";
+
+service Common {
+	rpc Ping (Empty) returns (PingResp) {
+	  option (google.api.http) = {
+			get: "/ping",
+	  };
+	}
+}
+  
+message PingResp{
+	string version = 1;
+	string name = 2;
+	string  time = 3;
+}
+
+message Empty{}
