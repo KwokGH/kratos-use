@@ -53,4 +53,6 @@ go generate ./ent
 
 ## 欢迎一起讨论
 有问题可以选择加下面的微信，拉你进群一起讨论。
-![微信](wechat.jpg)
+<p align="center">    
+<img  src="wechat.jpg" width="200" />
+</p>
