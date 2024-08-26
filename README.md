@@ -50,9 +50,4 @@ go generate ./ent
 
 ## 资源
 * [kratos](https://go-kratos.dev/docs/)
-
-## 欢迎一起讨论
-有问题可以选择加下面的微信，拉你进群一起讨论。
-<p>    
-<img  src="wechat.jpg" width="200" />
-</p>
+* [kratos-use 文章](https://blog.csdn.net/ghhg521/article/details/141471093)
