@@ -51,7 +51,7 @@ func main() {
 	flag.Parse()
 	c := config.New(
 		config.WithSource(
-			env.NewSource("KRATOS_"),
+			env.NewSource(""),
 		),
 	)
 	defer c.Close()
@@ -99,7 +99,7 @@ func setConfig(c config.Config, bc *conf.Bootstrap) {
 	// 数据库
 	bc.Data = &conf.Data{Database: &conf.Data_Database{
 		Driver: "mysql",
-		Source: mustGetString(c, "DATABASE_SOURCE"),
+		Source: mustGetString(c, DatabaseSourceKey),
 	}}
 
 	// 日志
@@ -114,7 +114,7 @@ func setConfig(c config.Config, bc *conf.Bootstrap) {
 	bc.App = &conf.App{
 		// jwt
 		Auth: &conf.App_Auth{
-			AccessSecret: mustGetString(c, "AUTH_ACCESS_SECRET"),
+			AccessSecret: mustGetString(c, AuthAccessSecretKey),
 			AccessExpire: 1296000,
 		},
 	}
