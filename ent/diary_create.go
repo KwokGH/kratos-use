@@ -182,6 +182,10 @@ func (dc *DiaryCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (dc *DiaryCreate) defaults() error {
+	if _, ok := dc.mutation.DeletedAt(); !ok {
+		v := diary.DefaultDeletedAt
+		dc.mutation.SetDeletedAt(v)
+	}
 	if _, ok := dc.mutation.CreatedAt(); !ok {
 		v := diary.DefaultCreatedAt
 		dc.mutation.SetCreatedAt(v)
@@ -222,6 +226,9 @@ func (dc *DiaryCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (dc *DiaryCreate) check() error {
+	if _, ok := dc.mutation.DeletedAt(); !ok {
+		return &ValidationError{Name: "deleted_at", err: errors.New(`ent: missing required field "Diary.deleted_at"`)}
+	}
 	if _, ok := dc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Diary.created_at"`)}
 	}

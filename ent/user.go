@@ -16,6 +16,8 @@ type User struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
+	// DeletedAt holds the value of the "deleted_at" field.
+	DeletedAt int64 `json:"deleted_at,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt int64 `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -38,7 +40,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldCreatedAt, user.FieldUpdatedAt:
+		case user.FieldDeletedAt, user.FieldCreatedAt, user.FieldUpdatedAt:
 			values[i] = new(sql.NullInt64)
 		case user.FieldID, user.FieldAccount, user.FieldPassword, user.FieldPasswordSalt, user.FieldName, user.FieldMobile:
 			values[i] = new(sql.NullString)
@@ -62,6 +64,12 @@ func (u *User) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
 				u.ID = value.String
+			}
+		case user.FieldDeletedAt:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
+			} else if value.Valid {
+				u.DeletedAt = value.Int64
 			}
 		case user.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -141,6 +149,9 @@ func (u *User) String() string {
 	var builder strings.Builder
 	builder.WriteString("User(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
+	builder.WriteString("deleted_at=")
+	builder.WriteString(fmt.Sprintf("%v", u.DeletedAt))
+	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(fmt.Sprintf("%v", u.CreatedAt))
 	builder.WriteString(", ")

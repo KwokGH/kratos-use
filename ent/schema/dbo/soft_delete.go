@@ -25,8 +25,7 @@ type SoftDeleteMixin struct {
 
 func (SoftDeleteMixin) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int64("deleted_at").
-			Optional(),
+		field.Int64("deleted_at").Default(0),
 	}
 }
 

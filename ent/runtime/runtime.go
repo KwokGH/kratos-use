@@ -17,8 +17,14 @@ func init() {
 	diary.Hooks[0] = diaryMixinHooks0[0]
 	diaryMixinInters0 := diaryMixin[0].Interceptors()
 	diary.Interceptors[0] = diaryMixinInters0[0]
+	diaryMixinFields0 := diaryMixin[0].Fields()
+	_ = diaryMixinFields0
 	diaryFields := schema.Diary{}.Fields()
 	_ = diaryFields
+	// diaryDescDeletedAt is the schema descriptor for deleted_at field.
+	diaryDescDeletedAt := diaryMixinFields0[0].Descriptor()
+	// diary.DefaultDeletedAt holds the default value on creation for the deleted_at field.
+	diary.DefaultDeletedAt = diaryDescDeletedAt.Default.(int64)
 	// diaryDescCreatedAt is the schema descriptor for created_at field.
 	diaryDescCreatedAt := diaryFields[1].Descriptor()
 	// diary.DefaultCreatedAt holds the default value on creation for the created_at field.
@@ -67,8 +73,19 @@ func init() {
 			return nil
 		}
 	}()
+	userMixin := schema.User{}.Mixin()
+	userMixinHooks0 := userMixin[0].Hooks()
+	user.Hooks[0] = userMixinHooks0[0]
+	userMixinInters0 := userMixin[0].Interceptors()
+	user.Interceptors[0] = userMixinInters0[0]
+	userMixinFields0 := userMixin[0].Fields()
+	_ = userMixinFields0
 	userFields := schema.User{}.Fields()
 	_ = userFields
+	// userDescDeletedAt is the schema descriptor for deleted_at field.
+	userDescDeletedAt := userMixinFields0[0].Descriptor()
+	// user.DefaultDeletedAt holds the default value on creation for the deleted_at field.
+	user.DefaultDeletedAt = userDescDeletedAt.Default.(int64)
 	// userDescCreatedAt is the schema descriptor for created_at field.
 	userDescCreatedAt := userFields[1].Descriptor()
 	// user.DefaultCreatedAt holds the default value on creation for the created_at field.
@@ -120,6 +137,6 @@ func init() {
 }
 
 const (
-	Version = "v0.13.1"                                         // Version of ent codegen.
-	Sum     = "h1:uD8QwN1h6SNphdCCzmkMN3feSUzNnVvV/WIkHKMbzOE=" // Sum of ent codegen.
+	Version = "v0.14.1"                                         // Version of ent codegen.
+	Sum     = "h1:fUERL506Pqr92EPHJqr8EYxbPioflJo6PudkrEA8a/s=" // Sum of ent codegen.
 )

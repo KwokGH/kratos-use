@@ -27,6 +27,27 @@ func (uu *UserUpdate) Where(ps ...predicate.User) *UserUpdate {
 	return uu
 }
 
+// SetDeletedAt sets the "deleted_at" field.
+func (uu *UserUpdate) SetDeletedAt(i int64) *UserUpdate {
+	uu.mutation.ResetDeletedAt()
+	uu.mutation.SetDeletedAt(i)
+	return uu
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableDeletedAt(i *int64) *UserUpdate {
+	if i != nil {
+		uu.SetDeletedAt(*i)
+	}
+	return uu
+}
+
+// AddDeletedAt adds i to the "deleted_at" field.
+func (uu *UserUpdate) AddDeletedAt(i int64) *UserUpdate {
+	uu.mutation.AddDeletedAt(i)
+	return uu
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (uu *UserUpdate) SetCreatedAt(i int64) *UserUpdate {
 	uu.mutation.ResetCreatedAt()
@@ -180,6 +201,12 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := uu.mutation.DeletedAt(); ok {
+		_spec.SetField(user.FieldDeletedAt, field.TypeInt64, value)
+	}
+	if value, ok := uu.mutation.AddedDeletedAt(); ok {
+		_spec.AddField(user.FieldDeletedAt, field.TypeInt64, value)
+	}
 	if value, ok := uu.mutation.CreatedAt(); ok {
 		_spec.SetField(user.FieldCreatedAt, field.TypeInt64, value)
 	}
@@ -225,6 +252,27 @@ type UserUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *UserMutation
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (uuo *UserUpdateOne) SetDeletedAt(i int64) *UserUpdateOne {
+	uuo.mutation.ResetDeletedAt()
+	uuo.mutation.SetDeletedAt(i)
+	return uuo
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableDeletedAt(i *int64) *UserUpdateOne {
+	if i != nil {
+		uuo.SetDeletedAt(*i)
+	}
+	return uuo
+}
+
+// AddDeletedAt adds i to the "deleted_at" field.
+func (uuo *UserUpdateOne) AddDeletedAt(i int64) *UserUpdateOne {
+	uuo.mutation.AddDeletedAt(i)
+	return uuo
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -409,6 +457,12 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := uuo.mutation.DeletedAt(); ok {
+		_spec.SetField(user.FieldDeletedAt, field.TypeInt64, value)
+	}
+	if value, ok := uuo.mutation.AddedDeletedAt(); ok {
+		_spec.AddField(user.FieldDeletedAt, field.TypeInt64, value)
 	}
 	if value, ok := uuo.mutation.CreatedAt(); ok {
 		_spec.SetField(user.FieldCreatedAt, field.TypeInt64, value)

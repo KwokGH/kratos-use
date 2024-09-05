@@ -63,6 +63,11 @@ func IDContainsFold(id string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldID, id))
 }
 
+// DeletedAt applies equality check predicate on the "deleted_at" field. It's identical to DeletedAtEQ.
+func DeletedAt(v int64) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldDeletedAt, v))
+}
+
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v int64) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldCreatedAt, v))
@@ -96,6 +101,46 @@ func Name(v string) predicate.User {
 // Mobile applies equality check predicate on the "mobile" field. It's identical to MobileEQ.
 func Mobile(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldMobile, v))
+}
+
+// DeletedAtEQ applies the EQ predicate on the "deleted_at" field.
+func DeletedAtEQ(v int64) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldDeletedAt, v))
+}
+
+// DeletedAtNEQ applies the NEQ predicate on the "deleted_at" field.
+func DeletedAtNEQ(v int64) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldDeletedAt, v))
+}
+
+// DeletedAtIn applies the In predicate on the "deleted_at" field.
+func DeletedAtIn(vs ...int64) predicate.User {
+	return predicate.User(sql.FieldIn(FieldDeletedAt, vs...))
+}
+
+// DeletedAtNotIn applies the NotIn predicate on the "deleted_at" field.
+func DeletedAtNotIn(vs ...int64) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldDeletedAt, vs...))
+}
+
+// DeletedAtGT applies the GT predicate on the "deleted_at" field.
+func DeletedAtGT(v int64) predicate.User {
+	return predicate.User(sql.FieldGT(FieldDeletedAt, v))
+}
+
+// DeletedAtGTE applies the GTE predicate on the "deleted_at" field.
+func DeletedAtGTE(v int64) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldDeletedAt, v))
+}
+
+// DeletedAtLT applies the LT predicate on the "deleted_at" field.
+func DeletedAtLT(v int64) predicate.User {
+	return predicate.User(sql.FieldLT(FieldDeletedAt, v))
+}
+
+// DeletedAtLTE applies the LTE predicate on the "deleted_at" field.
+func DeletedAtLTE(v int64) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldDeletedAt, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.

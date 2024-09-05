@@ -4,6 +4,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+	"kratos-use/ent/schema/dbo"
 )
 
 // User holds the schema definition for the User entity.
@@ -32,9 +33,15 @@ func (User) Edges() []ent.Edge {
 func (User) Indexes() []ent.Index {
 	return []ent.Index{
 		// 唯一约束索引
-		index.Fields("account", "updated_at").
+		index.Fields("account", "deleted_at").
 			Unique(),
-		index.Fields("mobile", "updated_at").
+		index.Fields("mobile", "deleted_at").
 			Unique(),
+	}
+}
+
+func (User) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		dbo.SoftDeleteMixin{},
 	}
 }

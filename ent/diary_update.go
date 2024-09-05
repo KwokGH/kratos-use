@@ -48,12 +48,6 @@ func (du *DiaryUpdate) AddDeletedAt(i int64) *DiaryUpdate {
 	return du
 }
 
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (du *DiaryUpdate) ClearDeletedAt() *DiaryUpdate {
-	du.mutation.ClearDeletedAt()
-	return du
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (du *DiaryUpdate) SetCreatedAt(i int64) *DiaryUpdate {
 	du.mutation.ResetCreatedAt()
@@ -220,9 +214,6 @@ func (du *DiaryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := du.mutation.AddedDeletedAt(); ok {
 		_spec.AddField(diary.FieldDeletedAt, field.TypeInt64, value)
 	}
-	if du.mutation.DeletedAtCleared() {
-		_spec.ClearField(diary.FieldDeletedAt, field.TypeInt64)
-	}
 	if value, ok := du.mutation.CreatedAt(); ok {
 		_spec.SetField(diary.FieldCreatedAt, field.TypeInt64, value)
 	}
@@ -291,12 +282,6 @@ func (duo *DiaryUpdateOne) SetNillableDeletedAt(i *int64) *DiaryUpdateOne {
 // AddDeletedAt adds i to the "deleted_at" field.
 func (duo *DiaryUpdateOne) AddDeletedAt(i int64) *DiaryUpdateOne {
 	duo.mutation.AddDeletedAt(i)
-	return duo
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (duo *DiaryUpdateOne) ClearDeletedAt() *DiaryUpdateOne {
-	duo.mutation.ClearDeletedAt()
 	return duo
 }
 
@@ -495,9 +480,6 @@ func (duo *DiaryUpdateOne) sqlSave(ctx context.Context) (_node *Diary, err error
 	}
 	if value, ok := duo.mutation.AddedDeletedAt(); ok {
 		_spec.AddField(diary.FieldDeletedAt, field.TypeInt64, value)
-	}
-	if duo.mutation.DeletedAtCleared() {
-		_spec.ClearField(diary.FieldDeletedAt, field.TypeInt64)
 	}
 	if value, ok := duo.mutation.CreatedAt(); ok {
 		_spec.SetField(diary.FieldCreatedAt, field.TypeInt64, value)

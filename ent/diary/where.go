@@ -143,16 +143,6 @@ func DeletedAtLTE(v int64) predicate.Diary {
 	return predicate.Diary(sql.FieldLTE(FieldDeletedAt, v))
 }
 
-// DeletedAtIsNil applies the IsNil predicate on the "deleted_at" field.
-func DeletedAtIsNil() predicate.Diary {
-	return predicate.Diary(sql.FieldIsNull(FieldDeletedAt))
-}
-
-// DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
-func DeletedAtNotNil() predicate.Diary {
-	return predicate.Diary(sql.FieldNotNull(FieldDeletedAt))
-}
-
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v int64) predicate.Diary {
 	return predicate.Diary(sql.FieldEQ(FieldCreatedAt, v))

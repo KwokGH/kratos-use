@@ -63,6 +63,8 @@ func ValidColumn(column string) bool {
 var (
 	Hooks        [1]ent.Hook
 	Interceptors [1]ent.Interceptor
+	// DefaultDeletedAt holds the default value on creation for the "deleted_at" field.
+	DefaultDeletedAt int64
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt int64
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.

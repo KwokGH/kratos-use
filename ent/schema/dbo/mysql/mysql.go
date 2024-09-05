@@ -30,12 +30,16 @@ func Open(source string) (*ent.Client, error) {
 		return nil, err
 	}
 
-	log.Info("mysql连接成功")
 	// 获取数据库驱动中的sql.DB对象。
 	db := drv.DB()
 	db.SetMaxIdleConns(10)
 	db.SetMaxOpenConns(100)
 	db.SetConnMaxLifetime(time.Hour)
+	err = db.Ping()
+	if err != nil {
+		log.Info("mysql连接失败")
+		return nil, err
+	}
 
 	client := ent.NewClient(ent.Driver(drv), ent.Debug())
 	client.Intercept(
@@ -80,6 +84,7 @@ func Open(source string) (*ent.Client, error) {
 		})
 	})
 
+	log.Info("mysql连接成功")
 	return client, nil
 }
 

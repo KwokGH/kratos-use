@@ -20,5 +20,5 @@ enum ErrorReason {
 
   NOT_FOUND = 4[(errors.code) = 404];
 
-  NOT_Conflict = 5[(errors.code) = 409];
+  Conflict = 5[(errors.code) = 409];
 }

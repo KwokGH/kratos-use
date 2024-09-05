@@ -19,6 +19,20 @@ type UserCreate struct {
 	hooks    []Hook
 }
 
+// SetDeletedAt sets the "deleted_at" field.
+func (uc *UserCreate) SetDeletedAt(i int64) *UserCreate {
+	uc.mutation.SetDeletedAt(i)
+	return uc
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (uc *UserCreate) SetNillableDeletedAt(i *int64) *UserCreate {
+	if i != nil {
+		uc.SetDeletedAt(*i)
+	}
+	return uc
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (uc *UserCreate) SetCreatedAt(i int64) *UserCreate {
 	uc.mutation.SetCreatedAt(i)
@@ -138,7 +152,9 @@ func (uc *UserCreate) Mutation() *UserMutation {
 
 // Save creates the User in the database.
 func (uc *UserCreate) Save(ctx context.Context) (*User, error) {
-	uc.defaults()
+	if err := uc.defaults(); err != nil {
+		return nil, err
+	}
 	return withHooks(ctx, uc.sqlSave, uc.mutation, uc.hooks)
 }
 
@@ -165,7 +181,11 @@ func (uc *UserCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (uc *UserCreate) defaults() {
+func (uc *UserCreate) defaults() error {
+	if _, ok := uc.mutation.DeletedAt(); !ok {
+		v := user.DefaultDeletedAt
+		uc.mutation.SetDeletedAt(v)
+	}
 	if _, ok := uc.mutation.CreatedAt(); !ok {
 		v := user.DefaultCreatedAt
 		uc.mutation.SetCreatedAt(v)
@@ -195,13 +215,20 @@ func (uc *UserCreate) defaults() {
 		uc.mutation.SetMobile(v)
 	}
 	if _, ok := uc.mutation.ID(); !ok {
+		if user.DefaultID == nil {
+			return fmt.Errorf("ent: uninitialized user.DefaultID (forgotten import ent/runtime?)")
+		}
 		v := user.DefaultID()
 		uc.mutation.SetID(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (uc *UserCreate) check() error {
+	if _, ok := uc.mutation.DeletedAt(); !ok {
+		return &ValidationError{Name: "deleted_at", err: errors.New(`ent: missing required field "User.deleted_at"`)}
+	}
 	if _, ok := uc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "User.created_at"`)}
 	}
@@ -262,6 +289,10 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if id, ok := uc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
+	}
+	if value, ok := uc.mutation.DeletedAt(); ok {
+		_spec.SetField(user.FieldDeletedAt, field.TypeInt64, value)
+		_node.DeletedAt = value
 	}
 	if value, ok := uc.mutation.CreatedAt(); ok {
 		_spec.SetField(user.FieldCreatedAt, field.TypeInt64, value)

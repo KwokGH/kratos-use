@@ -28,6 +28,9 @@ func (r *userRepo) CreateForRegister(ctx context.Context, input *entity.Register
 
 	if err != nil {
 		r.log.WithContext(ctx).Errorw("msg", "创建用户失败", "err", err)
+		if ent.IsConstraintError(err) {
+			return "", entity.ErrUserConflict
+		}
 		return "", err
 	}
 

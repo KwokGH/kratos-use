@@ -11,7 +11,7 @@ var (
 	// DiariesColumns holds the columns for the "diaries" table.
 	DiariesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Unique: true, Size: 60},
-		{Name: "deleted_at", Type: field.TypeInt64, Nullable: true},
+		{Name: "deleted_at", Type: field.TypeInt64, Default: 0},
 		{Name: "created_at", Type: field.TypeInt64, Default: 0},
 		{Name: "updated_at", Type: field.TypeInt64, Default: 0},
 		{Name: "title", Type: field.TypeString, Default: ""},
@@ -29,6 +29,7 @@ var (
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Unique: true, Size: 60},
+		{Name: "deleted_at", Type: field.TypeInt64, Default: 0},
 		{Name: "created_at", Type: field.TypeInt64, Default: 0},
 		{Name: "updated_at", Type: field.TypeInt64, Default: 0},
 		{Name: "account", Type: field.TypeString, Default: ""},
@@ -44,14 +45,14 @@ var (
 		PrimaryKey: []*schema.Column{UsersColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "user_account_updated_at",
+				Name:    "user_account_deleted_at",
 				Unique:  true,
-				Columns: []*schema.Column{UsersColumns[3], UsersColumns[2]},
+				Columns: []*schema.Column{UsersColumns[4], UsersColumns[1]},
 			},
 			{
-				Name:    "user_mobile_updated_at",
+				Name:    "user_mobile_deleted_at",
 				Unique:  true,
-				Columns: []*schema.Column{UsersColumns[7], UsersColumns[2]},
+				Columns: []*schema.Column{UsersColumns[8], UsersColumns[1]},
 			},
 		},
 	}

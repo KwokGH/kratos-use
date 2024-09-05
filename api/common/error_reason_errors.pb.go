@@ -71,14 +71,14 @@ func ErrorNotFound(format string, args ...interface{}) *errors.Error {
 	return errors.New(404, ErrorReason_NOT_FOUND.String(), fmt.Sprintf(format, args...))
 }
 
-func IsNotConflict(err error) bool {
+func IsConflict(err error) bool {
 	if err == nil {
 		return false
 	}
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_NOT_Conflict.String() && e.Code == 409
+	return e.Reason == ErrorReason_Conflict.String() && e.Code == 409
 }
 
-func ErrorNotConflict(format string, args ...interface{}) *errors.Error {
-	return errors.New(409, ErrorReason_NOT_Conflict.String(), fmt.Sprintf(format, args...))
+func ErrorConflict(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_Conflict.String(), fmt.Sprintf(format, args...))
 }
